@@ -1,0 +1,19 @@
+{{define "header"}}
+<header class="header">
+
+    <a href="/" class="logo">
+        <img src="/Ressources/Images/Spotify_Logo_CMYK_GreenVombre.png" alt="logospot">
+    </a> 
+    <div class="header-right" >
+        <form class="searchBox" method="post">
+            <input class="searchInput" type="text" id="filter" onkeyup="searchBoxFilter()" name="SearchBar" placeholder="Chercher">
+            <button class="searchButton" >
+                <i class="material-icons">
+                </i>
+            </button>
+        </form>
+        <a href="/groupie">Groupie</a> 
+    </div>
+
+</header>
+{{end}}

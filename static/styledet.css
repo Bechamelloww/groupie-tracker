@@ -1,0 +1,385 @@
+* {
+	margin:0px;
+	padding:0px;
+	cursor: url('/Ressources/Images/eogh.png'), default;
+	overflow-x: hidden;
+}
+
+audio {
+	display: flex;
+}
+
+audio::-webkit-media-controls-panel {
+	background-color: #21ca5c;
+  }
+  audio::-webkit-media-controls-play-button {
+	background-color: #242424;
+	border-radius: 50%;
+	color: #21ca5c;
+  }
+  audio::-webkit-media-controls-current-time-display {
+	display: none;
+  }
+  audio::-webkit-media-controls-time-remaining-display {
+	display:none;
+  }
+::selection {
+	color: rgb(232, 232, 232);
+	background: #21ca5c;
+}
+
+::-webkit-scrollbar {
+	width: 7px;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px #242424;
+	border-radius: 1px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+	background: #21ca5c;
+	border-radius: 1px;
+  }
+
+
+@font-face {
+	font-family: 'gothambold';
+	src: url('/Ressources/Polices/Gotham-Bold.otf');
+}
+
+@font-face {
+	font-family: 'gotham';
+	src: url('/Ressources/Polices/Gotham-Medium.otf');
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-family: 'gotham';
+	color: rgb(232, 232, 232);
+	background-color: #242424;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+
+.header {
+	overflow: hidden;
+	padding: 10px 10px;
+	background-color: #21ca5c;
+	color: #363636;
+}
+
+.header a {
+	font-family: 'gotham';
+	float: left;
+	color: #363636;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 16px;
+	line-height: 25px;
+	border-radius: 30px;
+	transition: 0.3s;
+}
+
+.header a.logo {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.header a:link {
+	text-decoration: none;
+}
+
+.header a img {
+	width: 300px;
+}
+
+.header a:hover {
+	background-color: rgba(0, 122, 67, 0.607);
+	color: #474747(255, 255, 255);
+}
+
+.header a.active {
+	background-color: rgba(0, 122, 67, 0.607);
+	color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+	float: right;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	
+	color: rgb(232, 232, 232);
+}
+
+.header-right a {
+	float: right;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 14px;
+	margin-bottom: 10px;
+	background-color: #242424;
+	color: #21ca5c;
+}
+
+.header-right a:hover {
+	color: rgba(255, 255, 255, 0.811);
+	background-color: #000000;
+}
+
+.searchBox {
+    position: absolute;
+    transform:  translate(-100%,0%);
+    background: #242424;
+    height: 10px;
+    border-radius: 40px;
+    padding: 10px;
+    overflow-y: hidden;
+  }
+  .searchBox:hover {
+    display: flex;
+  }
+  .searchBox:hover > .searchInput {
+    width: 240px;
+    padding: 0 6px;
+    
+  }
+  
+  .searchBox:hover > .searchButton {
+  background: white;
+  color : #242424;
+  }
+  
+  .searchButton {
+    color: white;
+    float: right;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #21ca5c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+  }
+  
+  .searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    float:left;
+    display: flex;
+    padding: 0;
+    color: white;
+    font-size: 12px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+  
+  }
+
+  .searchInput:focus {
+	height: 100%;
+	width: 240px;
+	display:flex;
+  }  
+  
+  @media screen and (max-width: 620px) {
+  .searchBox:hover > .searchInput {
+    width: 150px;
+    padding: 0 6px;
+  }
+}
+
+.footer {
+	display: flex;
+	overflow: hidden;
+	padding: 20px 10px;
+	margin-bottom: 0px;
+	background-color: #1B1B1B;
+	color: #cfcfcf;
+	justify-content: center;
+	position: static;
+}
+
+.footer a:link {
+	text-decoration: none;
+}
+
+.footer a:visited {
+	color: #cfcfcf;
+}
+
+.bigbox {
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	flex-grow:1; /* 4 */
+}
+
+.bigbox .box {
+	display: flex;
+    overflow-x: hidden;
+    flex-direction: column;
+    /* align-items: center; */
+    /* margin-top: 60px; */
+    margin-left: 30px;
+    /* margin-bottom: 40px; */
+    margin-right: 30px;
+    justify-content: center;
+}
+
+.box .content {
+	transition: 0.2s;
+	background-color: #353232;
+	border-radius: 14px;
+	transition: 0.3s;
+	/*user-select: none; POUR EMPECHER LA SELECTION*/ 
+}
+
+.box .content audio{
+	size:30px;
+	height: 40px;
+	width: 100%;
+	margin-top: auto;
+	position: static;
+}
+
+.box .content img {
+	margin-top: 25px;
+	border-radius: 14px;
+	-webkit-filter: drop-shadow(6px 6px 6px #000000);
+	filter: drop-shadow(6px 6px 6px #000000);
+	transition: 0.2s;
+}
+
+.box .content p {
+	overflow-y: hidden;
+	font-family: 'gothambold';
+	margin-bottom: 0.3em;
+	font-size: 25px;
+	transition: 0.2s;
+}
+
+.box .content .myButton {
+	font-family: 'gotham';
+	font-size: 18px;
+	transition: 0.2s;
+	border-radius: 20px;
+	padding: 6px;
+	font-size: 20px;
+	text-align: center;
+	display: flex;
+	margin-top: -17px;
+}
+
+.box .content p:hover {
+	color: #21ca5c;
+	transition: 0.2s;
+}
+
+
+
+.box .content:hover {
+	background-color: #514d4d;
+}
+
+.myButton:hover {
+	background-color: #353232;
+	transition: 0.2s;
+}
+
+input {display:none}
+
+@media screen and (max-width: 550px) {
+
+	.header a {
+		float: none;
+		display: block;
+		text-align: center;
+	}
+
+	.header-right {
+		float: none;
+	}
+	.header-right a {
+		padding-top: 12px;
+		padding-bottom: 12px;
+	}
+	.searchBox {
+		display: none;
+	}
+}
+
+p3 {
+	font-size:0.3em;
+}
+
+.mapbox {
+	display: flex;
+    align-items: center;
+	margin-left: 70px;
+}
+
+#map {
+	border-radius: 20px;
+	
+	width: 52vw;
+	height: 80%;
+}
+.box .Img-Membres {
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	align-items: center;
+}
+#NameD {
+	margin-top: 30px;
+    margin-bottom: 50px;
+}
+#ImgD{
+	
+
+}
+.MembresD{
+	width: 300px;
+    /* margin-left: 50px; */
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    /* justify-content: center; */
+    margin-top: 50px;
+    text-align: center;
+}
+.ImgMembresName {
+	display: flex;
+}
+#RangeMembres {
+	font-size: 15px;
+}
+#columMembres {
+	flex-direction: column;
+}
+p4 {
+	font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#tilt {
+	transition: box-shadow 0.1s, transform 0.1s;
+
+	/*
+	  * Adding image to the background
+	  * No relation to the hover effect.
+	  */
+	background-image: url(http://unsplash.it/300/200);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+#tilt:hover {
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="static/style.css">
+    <title>Groupie Web</title>
+    <link rel="icon" type="image/x-icon" href="/Ressources/Images/tedquare.ico">
+</head>
+
+<body>
+
+    {{template "header"}}
+
+
+
+    <ul id="myUL">
+    </ul>
+    <div class="display">
+        <div class="Black-Bar">
+            <div class="FilterPlc">
+
+                <form method="post">
+                    <div class="slidecontainer">
+                        <input type="range" min="0" max="10" value="0" class="slider" id="myRange" name="FilterMb">
+                        <p>Nombre de Membres : <span id="demo"></span></p>
+                    </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="0" max="50000000" value="0" class="slider" id="myRange1"
+                            name="FilterFan">
+                        <p>Nombre de Fans : <span id="demo1"></span></p>
+                    </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="1959" max="2023" value="2023" class="slider" id="myRange2"
+                            name="FilterCreation">
+                        <p>Année de création : <span id="demo2"></span></p>
+                    </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="1959" max="2023" value="2023" class="slider" id="myRange3"
+                            name="FilterAlbum">
+                        <p>Sortie du premier album : <span id="demo3"></span></p>
+                    </div>
+                    <input type="submit" id="submitButton">
+                </form>
+            </div>
+        </div>
+        <div class="bigbox">
+            {{range .}}
+            <div class="box">
+                <input type="checkbox" id={{.Id}}>
+                <label for={{.Id}}>
+                    <div class="content">
+                        <img src={{.Image}} alt="album"><br>
+                        <p>{{.Name}}</p><br><br>
+                        <a class="myButton" onclick="location.href='/{{.Id}}'">Détails</a>
+                        <audio preload="auto" controls controlsList="nodownload noplaybackrate" src={{.Preview}}>Votre
+                            navigateur ne supporte pas cet audio.</audio>
+                    </div>
+                </label>
+            </div>
+            {{end}}
+            <div class="box">
+                <input type="checkbox" id=500>
+                <label for=500>
+                    <div class="content">
+                        <img src="/Ressources/Images/michou.jpg" alt="album"><br>
+                        <p>Michou</p><br><br>
+                        <a class="myButton" onclick="location.href='/'">Détails</a>
+                        <audio preload="auto" controls controlsList="nodownload noplaybackrate" src="/Ressources/Musiques/michou.mp3">Votre
+                            navigateur ne supporte pas cet audio.</audio>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    {{template "footer"}}
+    <script>
+        function searchBoxFilter() {
+            let input, filter, ul, li, a, i, txtValue, boxs;
+            input = document.getElementById("filter");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            boxs = document.getElementsByClassName("box");
+            for (i = 0; i < boxs.length; i++) {
+                a = boxs[i].getElementsByTagName("p")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    boxs[i].style.display = "";
+                } else {
+                    boxs[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        var slider1 = document.getElementById("myRange1");
+        var output1 = document.getElementById("demo1");
+        var slider2 = document.getElementById("myRange2");
+        var output2 = document.getElementById("demo2");
+        var slider3 = document.getElementById("myRange3");
+        var output3 = document.getElementById("demo3");
+        output.innerHTML = slider.value;
+        output1.innerHTML = slider1.value;
+        output2.innerHTML = slider2.value;
+        output3.innerHTML = slider3.value;
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }
+        slider1.oninput = function () {
+            output1.innerHTML = this.value;
+        }
+        slider2.oninput = function () {
+            output2.innerHTML = this.value;
+        }
+        slider3.oninput = function () {
+            output3.innerHTML = this.value;
+        }
+    </script>
+
+</body>
+
+</html>

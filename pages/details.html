@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<link rel="stylesheet" href="static/styledet.css" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet" />
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+	<title>Détails</title>
+	<link rel="icon" type="image/x-icon" href="/Ressources/Images/tedquare.ico" />
+</head>
+
+<body>
+	{{template "header"}}
+
+	<div class="bigbox">
+		<div class="box">
+			<input type="checkbox" id="{{.Id}}" />
+			<label for="{{.Id}}">
+				<div class="content">
+					<div class="ImgMembresName">
+						<div class="Img-Membres">
+							<img src="{{.Image}}" alt="album" id="tilt" />
+							<p id="NameD">{{.Name}}</p>
+						</div>
+						<div class="MembresD">
+							<p4>Membres</p4>
+							<p3 id="RangeMembres">{{range .Members}} {{.}} <br />
+								{{end}}
+							</p3>
+						</div>
+					</div>
+					<audio preload="auto" controls controlsList="nodownload noplaybackrate" src="{{.Preview}}">
+						Votre navigateur ne supporte pas cet audio.
+					</audio>
+				</div>
+			</label>
+		</div>
+
+		<div class="mapbox">
+			<div id="map"></div>
+		</div>
+	</div>
+
+	{{template "footer"}}
+</body>
+
+</html>
+
+<script>
+	mapboxgl.accessToken =
+		"pk.eyJ1IjoiYmVjaGFtZWxsbyIsImEiOiJjbGRzbGRpcnIwNWI3M3Vvd2Rqdnk5ODRwIn0.wkfgy9sjT3npzaH4F05U1Q";
+	const map = new mapboxgl.Map({
+		container: "map",
+		// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+		style: "mapbox://styles/mapbox/dark-v11",
+		center: [6.5645131478874355, 46.40083691816208],
+		zoom: 1,
+	});
+
+	const url = window.location.href; // pour avoir l'ID (de notre page)
+	let res = url.split("//");
+	let reso = res[1]; // reso = lien après le http://
+	let resa = reso.split("/");
+	resi = resa[1]; // ID de l'artiste letsgoo !
+	REQUEST_URL = "https://groupietrackers.herokuapp.com/api/locations/" + resi;
+	DATES_URL = "https://groupietrackers.herokuapp.com/api/dates/" + resi;
+	console.log(REQUEST_URL);
+	let loca = [];
+	let dates = [];
+	async function getData() {
+		let loca1 = [];
+		await fetch(REQUEST_URL, {
+			method: "get",
+			dataType: "json",
+		})
+			.then((response) => {
+				//rep = JSON.parse(response.json);
+				//return rep;
+				return response.json(); // << This is the problem
+			})
+			.then((resp) => {
+				loca1 = resp.locations;
+			});
+		return loca1;
+	}
+
+	async function getDates() {
+		let loca1 = [];
+		await fetch(DATES_URL, {
+			method: "get",
+			dataType: "json",
+		})
+			.then((response) => {
+				//rep = JSON.parse(response.json);
+				//return rep;
+				return response.json(); // << This is the problem
+			})
+			.then((resp) => {
+				loca1 = resp.dates;
+			});
+		return loca1;
+	}
+
+	dates = getDates();
+	loca = getData();
+	console.log(dates);
+	loca.then(async (locar) => {
+		for (let i = 0; i < locar.length; i++) {
+			dates.then(async (datar) => {
+				let coord = [];
+				await fetch(
+					"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+					locar[i] +
+					".json?proximity=ip&access_token=" +
+					mapboxgl.accessToken,
+					{
+						method: "get",
+						dataType: "json",
+					}
+				)
+					.then((response) => {
+						return response.json();
+					})
+					.then((data) => {
+						coord = data.features[0].geometry.coordinates;
+					});
+				console.log(coord);
+				// pour ajouter un marqueur à la position
+				const marker = new mapboxgl.Marker().setLngLat(coord).setPopup(
+					new mapboxgl.Popup({ offset: 25 }) // add popups
+						.setHTML(
+							`<h3>${datar[i]}</h3><p>${locar[i]}</p>`
+						)
+				).addTo(map);
+			})
+		}
+	});
+</script>
+<script>
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("demo");
+	var slider1 = document.getElementById("myRange1");
+	var output1 = document.getElementById("demo1");
+	output.innerHTML = slider.value;
+	output1.innerHTML = slider1.value;
+
+	slider.oninput = function () {
+		output.innerHTML = this.value;
+	}
+	slider1.oninput = function () {
+		output1.innerHTML = this.value;
+	}
+</script>
+<script>
+	/* Store the element in el */
+	let el = document.getElementById('tilt')
+
+	/* Get the height and width of the element */
+	const height = el.clientHeight
+	const width = el.clientWidth
+
+	/*
+	  * Add a listener for mousemove event
+	  * Which will trigger function 'handleMove'
+	  * On mousemove
+	  */
+	el.addEventListener('mousemove', handleMove)
+
+	/* Define function a */
+	function handleMove(e) {
+		/*
+		  * Get position of mouse cursor
+		  * With respect to the element
+		  * On mouseover
+		  */
+		/* Store the x position */
+		const xVal = e.layerX
+		/* Store the y position */
+		const yVal = e.layerY
+
+		/*
+		  * Calculate rotation valuee along the Y-axis
+		  * Here the multiplier 20 is to
+		  * Control the rotation
+		  * You can change the value and see the results
+		  */
+		const yRotation = 20 * ((xVal - width / 2) / width)
+
+		/* Calculate the rotation along the X-axis */
+		const xRotation = -20 * ((yVal - height / 2) / height)
+
+		/* Generate string for CSS transform property */
+		const string = 'perspective(500px) scale(1.1) rotateX(' + xRotation + 'deg) rotateY(' + yRotation + 'deg)'
+
+		/* Apply the calculated transformation */
+		el.style.transform = string
+	}
+
+	/* Add listener for mouseout event, remove the rotation */
+	el.addEventListener('mouseout', function () {
+		el.style.transform = 'perspective(500px) scale(1) rotateX(0) rotateY(0)'
+	})
+
+	/* Add listener for mousedown event, to simulate click */
+	el.addEventListener('mousedown', function () {
+		el.style.transform = 'perspective(500px) scale(0.9) rotateX(0) rotateY(0)'
+	})
+
+	/* Add listener for mouseup, simulate release of mouse click */
+	el.addEventListener('mouseup', function () {
+		el.style.transform = 'perspective(500px) scale(1.1) rotateX(0) rotateY(0)'
+	})
+</script>
